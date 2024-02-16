@@ -2,8 +2,9 @@ import { useCallback, useState } from "react";
 import GlobalStyle from "./components/GlobalStyles";
 import Header from "./components/Header";
 import { ThemeProvider } from 'styled-components';
-import themes, { ITheme } from './styles/themes';
+import themes from './styles/themes';
 import Container from "./components/Container";
+import { ITheme } from "./definitions/definitions";
 
 function App() {
 

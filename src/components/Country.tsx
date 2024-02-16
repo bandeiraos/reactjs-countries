@@ -1,17 +1,6 @@
 import styled from "styled-components";
-
-export interface ICountry {
-    name: {
-        common: string;
-    },
-    region: string,
-    population: number,
-    flags: {
-        svg: string,
-        alt: string;
-    },
-    capital: string[];
-}
+import { formatPopulation } from "../helpers/helpers";
+import { ICountry } from "../definitions/definitions";
 
 interface CountryProps {
     country: ICountry;
@@ -26,6 +15,7 @@ const CountryStyled = styled.li`
     cursor: pointer;
 
     .flag {
+        height: 136px;
         img {
             border-top-right-radius: 4px;
             border-top-left-radius: 4px;
@@ -55,15 +45,15 @@ const Country = ({ country }: CountryProps) => {
     const { name, region, population, capital, flags } = country;
 
     return (
-        <CountryStyled>
+        <CountryStyled role="button">
             <div className="flag">
-                <img src={flags.svg} alt={flags.alt} />
+                <img src={flags.png} alt={flags.alt} />
             </div>
             <div className="info">
                 <h2>{name.common}</h2>
 
                 <ul>
-                    <li><strong>Population: </strong>{population}</li>
+                    <li><strong>Population: </strong>{formatPopulation(population)}</li>
                     <li><strong>Region: </strong>{region}</li>
                     <li><strong>Capital: </strong>{capital}</li>
                 </ul>

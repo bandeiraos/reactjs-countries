@@ -1,20 +1,14 @@
-import { useCallback, useMemo, useState } from "react";
+import { KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import InputBase from "../styles/components/InputBase.styled";
-import { useQueryClient } from "react-query";
+import { hasPressedEnter } from "../helpers/helpers";
+import { IRegion } from "../definitions/definitions";
+import { OPTIONS_VALUES } from "../constants/constants";
 
-interface IRegion {
-    name: string,
-    value: string;
+interface SelectFieldProps {
+    onChange: (region: IRegion) => void,
+    region: IRegion;
 }
-
-const OPTIONS_VALUES: IRegion[] = [
-    { name: 'Africa', value: 'africa' },
-    { name: 'America', value: 'america' },
-    { name: 'Asia', value: 'asia' },
-    { name: 'Europe', value: 'europe' },
-    { name: 'Oceania', value: 'oceania' },
-];
 
 const SelectWrapperStyle = styled.div`
     width: 250px;
@@ -54,17 +48,9 @@ const OptionItemStyled = styled.li`
     }
 `;
 
-const fetchByRegion = async (region: string) => {
-    const resp = await fetch(`https://restcountries.com/v3.1/region/${region}`);
-    const data = await resp.json();
-
-    return data;
-};
-
-const SelectField = () => {
+const SelectField = ({ onChange, region }: SelectFieldProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [region, setRegion] = useState<string | null>(null);
-    const queryClient = useQueryClient();
+    const selectRef = useRef<HTMLDivElement>(null);
 
     const iconMemo = useMemo(() => {
         if (isOpen) {
@@ -87,30 +73,55 @@ const SelectField = () => {
     }, []);
 
     const handleChangeRegion = useCallback(async (region: IRegion) => {
-        const data = await fetchByRegion(region.value);
-        queryClient.setQueryData('countries', data);
-        setRegion(region.name);
         handleToggleDropdown();
-    }, [queryClient, handleToggleDropdown]);
+        onChange(region);
+    }, [handleToggleDropdown, onChange]);
+
+    const handleKeyDownFilters = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
+        if (hasPressedEnter(e.code)) {
+            handleToggleDropdown();
+        }
+    }, [handleToggleDropdown]);
+
+    const handleKeyDownFilterItem = useCallback((e: KeyboardEvent<HTMLLIElement>, region: IRegion) => {
+        if (hasPressedEnter(e.code)) {
+            onChange(region);
+            selectRef?.current?.focus();
+        }
+    }, [onChange]);
 
     const optionsMemo = useMemo(() => {
         return (
-            <OptionsStyled>
+            <OptionsStyled role="listbox" aria-hidden={!isOpen}>
                 {OPTIONS_VALUES.map((item) => (
-                    <OptionItemStyled key={item.value} onClick={() => handleChangeRegion(item)}>
+                    <OptionItemStyled
+                        key={item.value}
+                        role="button"
+                        onClick={() => handleChangeRegion(item)}
+                        tabIndex={0}
+                        onKeyDown={(e) => handleKeyDownFilterItem(e, item)}
+                    >
                         {item.name}
                     </OptionItemStyled>
                 ))}
             </OptionsStyled>
         );
-    }, [handleChangeRegion]);
+    }, [handleChangeRegion, handleKeyDownFilterItem, isOpen]);
 
     return (
-        <SelectWrapperStyle>
-            <SelectStyled onClick={handleToggleDropdown}>
-                {region ?? 'Filter by Region'}
+        <SelectWrapperStyle
+            ref={selectRef}
+            role="button"
+            aria-haspopup="listbox"
+            aria-expanded={isOpen}
+            tabIndex={0}
+            onKeyDown={handleKeyDownFilters}
+        >
+            <SelectStyled onClick={handleToggleDropdown} className="select-filter">
+                {region.value === 'all' ? 'Filter by Region' : region.name}
                 {iconMemo}
             </SelectStyled>
+
             {isOpen && optionsMemo}
         </SelectWrapperStyle>
 

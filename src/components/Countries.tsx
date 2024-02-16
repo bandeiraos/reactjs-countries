@@ -1,5 +1,5 @@
-import { useQuery } from "react-query";
-import Country, { ICountry } from "./Country";
+import { ICountry } from "../definitions/definitions";
+import Country from "./Country";
 import styled from "styled-components";
 
 const CountriesStyled = styled.ul`
@@ -18,19 +18,11 @@ const CountriesStyled = styled.ul`
     }
 `;
 
-const fetchCountries = async () => {
-    const resp = await fetch('https://restcountries.com/v3.1/all');
-    const data = await resp.json();
+interface CountriesProps {
+    countries: ICountry[];
+}
 
-    return data;
-};
-
-const Countries = () => {
-    const { data: countries, error, isLoading } = useQuery("countries", fetchCountries);
-
-    if (isLoading) return <div>Fetching countries...</div>;
-    if (error) return <div>An error occurred. Try again later.</div>;
-
+const Countries = ({ countries }: CountriesProps) => {
     return (
         <CountriesStyled>
             {countries.map((country: ICountry) => (
