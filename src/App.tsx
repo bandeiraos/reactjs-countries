@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import themes from './styles/themes';
 import Container from "./components/Container";
 import { ITheme } from "./definitions/definitions";
+import { CountriesProvider } from "./context/context";
 
 function App() {
 
@@ -21,7 +22,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Header onChangeTheme={handleChangeTheme} isDarkTheme={isDarkTheme} />
-      <Container />
+      <CountriesProvider>
+        <Container />
+      </CountriesProvider>
     </ThemeProvider>
   );
 }

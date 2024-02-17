@@ -4,6 +4,7 @@ export interface ITheme {
     elements: string,
     input: string;
     icon: string;
+    boxShadow: string;
 }
 
 export interface IThemes {
@@ -18,12 +19,29 @@ export interface IRegion {
 export interface ICountry {
     name: {
         common: string;
+        nativeName: {
+            [type: string]: {
+                common: string;
+            };
+        };
     },
     region: string,
     population: number,
     flags: {
+        svg: string,
         png: string,
-        alt: string;
+        alt: string,
     },
-    capital: string[];
+    capital: string[],
+    subregion: string,
+    tld: string[],
+    currencies: {
+        [name: string]: {
+            name: string;
+        };
+    },
+    languages: {
+        [name: string]: string;
+    },
+    borders: string[];
 }

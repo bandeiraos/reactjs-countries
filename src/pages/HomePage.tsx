@@ -24,6 +24,7 @@ const HomePageStyled = styled.div`
         }
     }
 `;
+
 const fetchCountries = async () => {
     const resp = await fetch('https://restcountries.com/v3.1/all');
     const data = await resp.json();
@@ -35,7 +36,7 @@ const HomePage = () => {
     const [region, setRegion] = useState(OPTIONS_VALUES[0]);
     const [search, setSearch] = useState('');
 
-    const { data: allCountries, error, isLoading } = useQuery(["countries", region], fetchCountries);
+    const { data: allCountries, error, isLoading } = useQuery(["countries"], fetchCountries);
 
     const handleChangeSearch = useCallback((search: string) => {
         setSearch(search);

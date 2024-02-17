@@ -29,7 +29,7 @@ const SelectStyled = styled(InputBase)`
 const OptionsStyled = styled.ul`
     background-color: ${(props) => props.theme.elements};
     border-radius: 4px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    box-shadow: ${props => props.theme.boxShadow};
     padding: 12px 32px;
     position: absolute;
     top: 68px;

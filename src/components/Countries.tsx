@@ -26,7 +26,7 @@ const Countries = ({ countries }: CountriesProps) => {
     return (
         <CountriesStyled>
             {countries.map((country: ICountry) => (
-                <Country key={country.name.common} country={country} />
+                <Country key={country.cca2} country={country} />
             ))}
         </CountriesStyled>
     );

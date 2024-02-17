@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { formatPopulation } from "../helpers/helpers";
 import { ICountry } from "../definitions/definitions";
+import { useCountriesContext } from "../context/context";
 
 interface CountryProps {
     country: ICountry;
@@ -38,14 +39,14 @@ const CountryStyled = styled.li`
     @media screen and (max-width: 500px){
         width: 300px;
     }
-
 `;
 
 const Country = ({ country }: CountryProps) => {
     const { name, region, population, capital, flags } = country;
+    const { handleSelectCountry } = useCountriesContext();
 
     return (
-        <CountryStyled role="button">
+        <CountryStyled role="button" onClick={() => handleSelectCountry(country)}>
             <div className="flag">
                 <img src={flags.png} alt={flags.alt} />
             </div>
