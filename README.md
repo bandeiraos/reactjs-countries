@@ -1,22 +1,26 @@
 # REST Countries API with color theme switcher
 
+
+<img src="https://github.com/bandeiraos/reactjs-countries/assets/15945788/dbf47867-4a63-46d5-b615-9ba0da818c78" width="350" height="500" />
+
+
+
 React + TypeScript + React Query + ContextAPI + Vite
 
+Challange from [Frontend Mentor](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca).
 
-[https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca](Frontend Mentor Challange)
+API from [rest-countries](https://restcountries.com/).
 
-API from [https://restcountries.com/](rest-countries)
+**Features** 🌠:
 
-**Features**:
+- ☑️: See all countries from the API on the homepage
+- ☑️ Search for a country using an input field
+- ☑️ Filter countries by region
+- ☑️ Click on a country to see more detailed information on a separate page
+- ☑️ View the optimal layout for the interface depending on their device's screen size
+- ☑️ Toggle the color scheme between light and dark mode
 
-- :check: See all countries from the API on the homepage
-- :check: Search for a country using an input field
-- :check: Filter countries by region
-- :check: Click on a country to see more detailed information on a separate page
-- :check: View the optimal layout for the interface depending on their device's screen size
-- :check: Toggle the color scheme between light and dark mode
-
-**Todo**
+**Todo** ⏲️
 
 - Click through to the border countries on the detail page
 - See hover and focus states for all interactive elements on the page + Keyboard navigation (accessibility)
